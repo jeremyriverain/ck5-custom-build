@@ -13,6 +13,8 @@ const { bundler } = require( '@ckeditor/ckeditor5-dev-utils' );
 const CKEditorWebpackPlugin = require( '@ckeditor/ckeditor5-dev-webpack-plugin' );
 const BabiliPlugin = require( 'babel-minify-webpack-plugin' );
 const buildConfig = require( './build-config' );
+const ExtractTextPlugin = require( 'extract-text-webpack-plugin' );
+
 
 module.exports = {
 	devtool: 'source-map',
@@ -38,7 +40,9 @@ module.exports = {
 			banner: bundler.getLicenseBanner(),
 			raw: true
 		} ),
-		new webpack.optimize.ModuleConcatenationPlugin()
+		new webpack.optimize.ModuleConcatenationPlugin(),
+		new ExtractTextPlugin( 'styles.css' )
+
 	],
 
 	module: {
@@ -49,16 +53,18 @@ module.exports = {
 			},
 			{
 				test: /\.scss$/,
-				use: [
-					'style-loader',
-					{
-						loader: 'css-loader',
-						options: {
-							minimize: true
-						}
-					},
-					'sass-loader'
-				]
+				use: ExtractTextPlugin.extract( {
+					fallback: 'style-loader',
+					use: [
+						{
+							loader: 'css-loader',
+							options: {
+								minimize: true
+							}
+						},
+						'sass-loader'
+					]
+				} )	
 			}
 		]
 	}
