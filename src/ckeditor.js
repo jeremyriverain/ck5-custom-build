@@ -51,6 +51,7 @@ ClassicEditor.build = {
 				'link',
 				'bulletedList',
 				'numberedList',
+				'insertimage',
 				'blockQuote',
 				'undo',
 				'redo'
@@ -63,6 +64,9 @@ ClassicEditor.build = {
 				'|',
 				'imageTextAlternative'
 			]
+		},
+		ckfinder: {
+			uploadUrl: 'https://cksource.com/weuy2g4ryt278ywiue/core/connector/php/connector.php?command=QuickUpload&type=Files&responseType=json'
 		}
 	}
 };
